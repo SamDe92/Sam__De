@@ -3,6 +3,7 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from datetime import datetime
 
 token = 'input your token'
+============================================"Регистрация для пользователя"==========================
 '''login = input('Enter your login>>>')
 password = input('Enter your password>>>')
 
@@ -18,6 +19,7 @@ try:
     vk_session.auth()
 except vk_api.AuthError as error_msg:
     print(error_msg)'''
+================================================="РЕгистрация для группы"==========================================
 
 vk_session = vk_api.VkApi(token=token)
 session_api = vk_session.get_api()
