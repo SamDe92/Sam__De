@@ -2,7 +2,7 @@ import vk_api, random, main
 from vk_api.longpoll import VkLongPoll, VkEventType
 from datetime import datetime
 
-token = '9747417985bcb99c0260f4a9baade9621a268aea5e8ad71851e5c7586bcd55d7a8ca55e142b38205d5c6d'
+token = 'input your token'
 '''login = input('Enter your login>>>')
 password = input('Enter your password>>>')
 
