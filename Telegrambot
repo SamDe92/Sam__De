@@ -1,0 +1,54 @@
+import random
+
+import telebot
+import config
+from telebot import types
+
+bot = telebot.TeleBot(token='your token bot')
+
+
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    # keyboard
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton('Число')
+    item2 = types.KeyboardButton('Как Дела?')
+
+    markup.add(item1, item2)
+
+    bot.send_message(message.chat.id,
+                     'Hello, {0.first_name}!\n I am - <b>{1.first_name}</b> beta bot'
+                     .format(message.from_user,
+                             bot.get_me()),
+                     parse_mode='html', reply_markup=markup)
+
+
+@bot.message_handler(content_types=['text'])
+def send_message(message):
+    if message.chat.type == 'private':
+        if message.text == 'Число':
+            bot.send_message(message.chat.id, str(random.randint(0, 100)))
+        elif message.text == 'Как Дела?':
+            # inlinemarkup
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            item1 = types.InlineKeyboardButton('Good', callback_data='Yes')
+            iten2 = types.InlineKeyboardButton('Very good', callback_data='yah!')
+            markup.add(item1, iten2)
+            bot.send_message(message.chat.id, 'Good', reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, 'please. replay')
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    try:
+        if call.message:
+            if call.data == 'Yes':
+                bot.send_message(call.message.chat.id, 'It is good')
+            elif call.data == 'yah!':
+                bot.send_message(call.message.chat.id, 'It is so good')
+    except Exception as e:
+        print(repr(e))
+
+
+bot.polling(none_stop=True)
